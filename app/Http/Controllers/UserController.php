@@ -24,7 +24,7 @@ class UserController extends Controller
 
         $activeMenu = 'user'; // set menu yang sedang aktif
 
-        $level = LevelModel::all(); // Ambil data level untuk filter level
+        $level = LevelModel::all(); // Ambil data level untuk ditampilkan di form
 
         return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
     }

@@ -23,7 +23,7 @@ class LevelController extends Controller
 
         $activeMenu = 'level'; // Set menu aktif
 
-        return view('level.indexlv', compact('breadcrumb', 'page', 'activeMenu'));
+        return view('level.index', compact('breadcrumb', 'page', 'activeMenu'));
     }
 
     public function list(Request $request)
@@ -57,7 +57,7 @@ class LevelController extends Controller
 
         $activeMenu = 'level'; // Set menu aktif
 
-        return view('level.createlv', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        return view('level.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
     }
 
     public function store(Request $request)
@@ -90,7 +90,7 @@ class LevelController extends Controller
 
         $activeMenu = 'level'; // Set menu aktif
 
-        return view('level.showlv', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('level.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
     }
 
     public function edit($id)
@@ -108,7 +108,7 @@ class LevelController extends Controller
 
         $activeMenu = 'level'; // Set menu aktif
 
-        return view('level.editlv', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('level.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
     }
 
     public function update(Request $request, $id)

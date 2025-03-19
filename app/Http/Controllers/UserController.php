@@ -210,10 +210,7 @@ public function list(Request $request)
 
     public function create_ajax()
     {
-        $level = LevelModel::select('level_id', 'level_nama')->get();
-
-        return view('user.create_ajax')
-            ->with('level', $level);
+        return view('user.create_ajax')->with('level', LevelModel::select('level_id', 'level_nama')->get());
     }
 
     public function store_ajax(Request $request)
@@ -259,7 +256,7 @@ public function list(Request $request)
     public function update_ajax(Request $request, string $id) {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'username' => 'required|string|min:3|unique:m.user,username,'.$id.',user_id',
+                'username' => 'required|string|min:3|unique:m_user,username,'.$id.',user_id',
                 'nama' => 'required|string|max:100', // nama maksimal 100 karakter
                 'password' => 'nullable|min:6', // password minimal 5 karakter
                 'level_id' => 'required|integer'  // level_id harus berupa angka
@@ -301,4 +298,25 @@ public function list(Request $request)
         $user = UserModel::find($id);
         return view('user.confirm_ajax', ['user' => $user]);
     }
+
+    public function delete_ajax(Request $request, $id)
+{
+    // Cek apakah request berasal dari AJAX
+    if ($request->ajax() || $request->wantsJson()) {
+        $user = UserModel::find($id);
+        if ($user) {
+            $user->delete();
+            return response()->json([
+                'status' => true,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
+        }
+    }
+    return redirect('/');
+}
 }

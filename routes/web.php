@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Route Level
-    Route::prefix('level')->group(function () {
+    Route::prefix('level')->middleware(['authorize:ADM'])->group(function () {
         Route::get('/', [LevelController::class, 'index']);
         Route::post('/list', [LevelController::class, 'list']);
         Route::get('/create', [LevelController::class, 'create']);
@@ -49,4 +49,3 @@ Route::middleware(['auth'])->group(function () {
 
     // Tambahkan route lainnya di sini
 });
-

@@ -15,8 +15,7 @@
                 </a>
 
                 <button onclick="modalAction('{{ url('/barang/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah
-                    Data
-                    (Ajax)</button>
+                    Data(Ajax)</button>
             </div>
         </div>
         <div class="card-body">

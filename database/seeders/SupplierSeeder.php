@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -12,10 +13,24 @@ class SupplierSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('m_supplier')->insert([
-            ['supplier_nama' => 'Supplier A'],
-            ['supplier_nama' => 'Supplier B'],
-            ['supplier_nama' => 'Supplier C'],
-        ]);
+        $data = [
+            [
+                'supplier_id' => 1,
+                'supplier_kode' => 'SUP-001',
+                'nama_supplier' => 'Nusantara Supply Co.',
+            ],
+            [
+                'supplier_id' => 2,
+                'supplier_kode' => 'SUP-002',
+                'nama_supplier' => 'Mega Logistic Group',
+            ],
+            [
+                'supplier_id' => 3,
+                'supplier_kode' => 'SUP-003',
+                'nama_supplier' => 'Prima Niaga Abadi',
+            ],
+        ];
+
+        DB::table('m_supplier')->insert($data);
     }
 }

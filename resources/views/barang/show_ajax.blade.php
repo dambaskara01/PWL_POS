@@ -1,4 +1,4 @@
-@empty($penjualan)
+@empty($barang)
 <div id="modal-master" class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -28,20 +28,32 @@
         <div class="modal-body">
             <table class="table table-bordered table-striped table-hover table-sm">
                 <tr>
-                    <th>Kode Penjualan</th>
-                    <td>{{ $penjualan->penjualan_kode }}</td>
+                    <th>ID</th>
+                    <td>{{ $barang->barang_id }}</td>
                 </tr>
                 <tr>
-                    <th>Nama Pembeli</th>
-                    <td>{{ $penjualan->pembeli}}</td>
+                    <th>Kategori Barang</th>
+                    <td>{{ $barang->kategori->kategori_nama }}</td>
                 </tr>
                 <tr>
-                    <th>Nama Kasir</th>
-                    <td>{{ $penjualan->user->nama }}</td>
+                    <th>Kode Barang</th>
+                    <td>{{ $barang->barang_kode }}</td>
                 </tr>
                 <tr>
-                    <th>Tanggal</th>
-                    <td>{{ $penjualan->penjualan_tanggal }}</td>
+                    <th>Nama Barang</th>
+                    <td>{{ $barang->barang_nama }}</td>
+                </tr>
+                <tr>
+                    <th>Harga Beli</th>
+                    <td>{{ $barang->harga_beli }}</td>
+                </tr>
+                <tr>
+                    <th>Harga Jual</th>
+                    <td>{{ $barang->harga_jual }}</td>
+                </tr>
+                <tr>
+                    <th>Jumlah Stok</th>
+                    <td>{{ $barang->barang_stok }}</td>
                 </tr>
             </table>
         </div>

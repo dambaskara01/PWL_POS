@@ -9,6 +9,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,9 @@ Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 // Bungkus semua route lainnya dalam middleware auth
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [WelcomeController::class, 'index']);
+
+    Route::get('/change-photo', [ProfileController::class, 'changePhoto'])->name('change-photo');
+     Route::post('/update-photo', [ProfileController::class, 'updatePhoto'])->name('update-photo');
 
     // Route User
     Route::prefix('user')->group(function () {
@@ -76,28 +80,31 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('barang')->group(function () {
-        Route::get('/', [BarangController::class, 'index']);
-        Route::post('/list', [BarangController::class, 'list']);
-
-        Route::get('/create', [BarangController::class, 'create']);
-        Route::post('/', [BarangController::class, 'store']);
-        Route::get('/{id}', [BarangController::class, 'show']);
-        Route::get('/{id}/edit', [BarangController::class, 'edit']);
-        Route::put('/{id}', [BarangController::class, 'update']);
-        Route::delete('/{id}', [BarangController::class, 'destroy']);
+        Route::get('/', [BarangController::class, 'index'])->name('barang.index');
+        Route::post('/list', [BarangController::class, 'list'])->name('barang.list');
+    
+        Route::get('/create', [BarangController::class, 'create'])->name('barang.create');
+        Route::post('/store', [BarangController::class, 'store'])->name('barang.store');
+        Route::get('/{id}', [BarangController::class, 'show'])->name('barang.show');
+        Route::get('/{id}/edit', [BarangController::class, 'edit'])->name('barang.edit');
+        Route::put('/{id}/update', [BarangController::class, 'update'])->name('barang.update');
+        Route::delete('/{id}/destroy', [BarangController::class, 'destroy'])->name('barang.destroy');
     
         Route::get('/create_ajax', [BarangController::class, 'create_ajax'])->name('barang.create_ajax');
         Route::post('/store_ajax', [BarangController::class, 'store_ajax'])->name('barang.store_ajax');
+        Route::get('/list_ajax', [BarangController::class, 'list_ajax'])->name('barang.list_ajax');
+        Route::get('/{id}/show_ajax', [BarangController::class, 'show_ajax'])->name('barang.show_ajax');
         Route::get('/{id}/edit_ajax', [BarangController::class, 'edit_ajax'])->name('barang.edit_ajax');
         Route::put('/{id}/update_ajax', [BarangController::class, 'update_ajax'])->name('barang.update_ajax');
         Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax'])->name('barang.confirm_ajax');
         Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax'])->name('barang.delete_ajax');
-    
+
         Route::get('/import', [BarangController::class, 'import'])->name('barang.import'); 
         Route::post('/import_ajax', [BarangController::class, 'import_ajax'])->name('barang.import_ajax');
         Route::get('/export_excel', [BarangController::class, 'export_excel'])->name('barang.export_excel'); // export excel
         Route::get('/export_pdf', [BarangController::class, 'export_pdf'])->name('barang.export_pdf'); // export pdf
     });
+    
     
 
     Route::prefix('kategori')->group(function () {
@@ -184,12 +191,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/create', [PenjualanController::class, 'create']);
         Route::post('/', [PenjualanController::class, 'store']);
-        Route::get('/{id}', [PenjualanController::class, 'show']);
         Route::get('/{id}/edit', [PenjualanController::class, 'edit']);
         Route::put('/{id}', [PenjualanController::class, 'update']);
         Route::delete('/{id}', [PenjualanController::class, 'destroy']);
 
         Route::get('/create_ajax', [PenjualanController::class, 'create_ajax']);
+        Route::get('/{id}/show_ajax', [PenjualanController::class, 'show_ajax']); // Pastikan rute ini tidak bentrok
         Route::post('/store_ajax', [PenjualanController::class, 'store_ajax']);
         Route::get('/{id}/edit_ajax', [PenjualanController::class, 'edit_ajax']);
         Route::put('/{id}/update_ajax', [PenjualanController::class, 'update_ajax']);

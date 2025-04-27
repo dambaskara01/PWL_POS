@@ -28,27 +28,33 @@ class PenjualanController extends Controller
         return view('penjualan.index', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu, 'page' => $page, 'user' => $user]);
     }
 
-    public function list(Request $requet)
+    public function list(Request $request)
     {
-        $penjualans = PenjualanModel::with(['user']);
+        $penjualans = PenjualanModel::select(
+            'penjualan_id',
+            'user_id',
+            'pembeli',
+            'penjualan_kode',
+            'penjualan_tanggal'
+        )
+        ->with('user'); 
 
-        if ($requet->user_id) {
-            $penjualans->where('user_id', $requet->user_id);
+        // Filter data berdasarkan user_id
+        $user_id = $request->input('user_id');
+        if (!empty($user_id)) {
+            $penjualans->where('user_id', $user_id);
         }
-        return Datatables::of($penjualans)
-            ->addIndexColumn()
-            ->addColumn('user.username', function ($penjualan) {
-                return $penjualan->user->username ?? '-';
-            })
-            ->addColumn('aksi', function ($penjualan) {
-                $btn  = '<a href="' . url('/penjualan/' . $penjualan->user_id) . '" class="btn btn-info btn-sm">Detail</a> ';
-                $btn .= '<a href="' . url('/penjualan/' . $penjualan->user_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
-                $btn .= '<form class="d-inline-block" method="POST" action="' . url('/penjualan/' . $penjualan->user_id) . '">'
-                    . csrf_field() . method_field('DELETE') .
-                    '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
-                        Hapus
-                    </button>
-                </form>';
+
+        return DataTables::of($penjualans)
+            ->addIndexColumn() 
+            ->addColumn('aksi', function ($penjualans) {
+                $btn = '<button onclick="modalAction(\'' . url('/penjualan/' . $penjualans->penjualan_id . 
+                '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/penjualan/' . $penjualans->penjualan_id . 
+                '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/penjualan/' . $penjualans->penjualan_id .
+                '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+
                 return $btn;
             })
             ->rawColumns(['aksi'])
@@ -163,8 +169,25 @@ class PenjualanController extends Controller
 
     public function show_ajax(string $id)
     {
-        $penjualan = PenjualanModel::find($id);
+        // Ambil data penjualan beserta relasi yang diperlukan
+        $penjualan = PenjualanModel::with('user') // Pastikan relasi 'produk' ada di model
+            ->where('penjualan_id', $id)
+            ->first();
+
+        if (!$penjualan) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data penjualan tidak ditemukan'
+            ], 404);
+        }
+
         return view('penjualan.show_ajax', compact('penjualan'));
+    }
+
+    public function show(string $id)
+    {
+        $penjualan = PenjualanModel::find($id);
+        return view('penjualan.show', compact('penjualan'));
     }
     public function import()
     {

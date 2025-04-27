@@ -7,7 +7,7 @@
             <div class="card-tools">
                 <button onclick="modalAction('{{ url('/penjualan/create_ajax') }}')"
                     class="btn btn-sm btn-success mt-1">Tambah Penjualan</button>
-                <a href="{{ route('penjualan.export_excel') }}" class="btn btn-primary">
+                <a href="{{ route('penjualan.export_excel') }}" class="btn btn-sm btn-primary mt-1">
                     <i class="fa fa-file-excel"></i> Export Excel
                 </a>
 

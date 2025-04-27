@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     
         Route::get('/create_ajax', [UserController::class, 'create_ajax']);
         Route::post('/store_ajax', [UserController::class, 'store_ajax']);
+        Route::get('/{id}/show_ajax', [UserController::class, 'show_ajax']);
         Route::get('/{id}/edit_ajax', [UserController::class, 'edit_ajax']);
         Route::put('/{id}/update_ajax', [UserController::class, 'update_ajax']);
         Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']);
@@ -178,27 +179,23 @@ Route::middleware(['auth'])->group(function () {
     
 
     Route::prefix('penjualan')->group(function () {
-        // 📌 Route utama untuk daftar penjualan
         Route::get('/', [PenjualanController::class, 'index']);
         Route::post('/list', [PenjualanController::class, 'list']);
-    
-        // 📌 CRUD utama
+
         Route::get('/create', [PenjualanController::class, 'create']);
         Route::post('/', [PenjualanController::class, 'store']);
         Route::get('/{id}', [PenjualanController::class, 'show']);
         Route::get('/{id}/edit', [PenjualanController::class, 'edit']);
         Route::put('/{id}', [PenjualanController::class, 'update']);
         Route::delete('/{id}', [PenjualanController::class, 'destroy']);
-    
-        // 📌 AJAX CRUD
+
         Route::get('/create_ajax', [PenjualanController::class, 'create_ajax']);
         Route::post('/store_ajax', [PenjualanController::class, 'store_ajax']);
         Route::get('/{id}/edit_ajax', [PenjualanController::class, 'edit_ajax']);
         Route::put('/{id}/update_ajax', [PenjualanController::class, 'update_ajax']);
         Route::get('/{id}/delete_ajax', [PenjualanController::class, 'confirm_ajax']);
         Route::delete('/{id}/delete_ajax', [PenjualanController::class, 'delete_ajax']);
-    
-        // 📌 Import & Export
+
         Route::get('/import', [PenjualanController::class, 'import']);
         Route::post('/import_ajax', [PenjualanController::class, 'import_ajax']);
         Route::get('/export_excel', [PenjualanController::class, 'export_excel'])->name('penjualan.export_excel');

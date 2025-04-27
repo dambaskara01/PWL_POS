@@ -1,4 +1,4 @@
-<form action="{{ url('/user/ajax') }}" method="POST" id="form-tambah">
+<form action="{{ url('/user/store_ajax') }}" method="POST" id="form-tambah">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -49,7 +49,7 @@
                     level_id: { required: true, number: true },
                     username: { required: true, minlength: 3, maxlength: 20 },
                     name: { required: true, minlength: 3, maxlength: 100 },
-                    password: { required: true, minlength: 6, maxlength: 20 }
+                    password: { required: true, minlength: 5, maxlength: 20 }
                 },
                 submitHandler: function (form) {
                     $.ajax({

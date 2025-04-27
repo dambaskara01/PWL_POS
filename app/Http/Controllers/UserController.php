@@ -216,6 +216,13 @@ class UserController extends Controller
         return view('user.create_ajax')->with('level', LevelModel::select('level_id', 'level_nama')->get());
     }
 
+    public function show_ajax(string $id)
+    {
+        $user = UserModel::find($id);
+        $level = LevelModel::select('level_id', 'level_nama')->get();
+        return view('user.show_ajax', ['user' => $user, 'level' => $level]);
+    }
+
     public function store_ajax(Request $request)
     {
         // cek apakah request berupa ajax
@@ -224,7 +231,7 @@ class UserController extends Controller
                 'level_id' => 'required|integer',
                 'username' => 'required|string|min:3|unique:m_user,username',
                 'nama' => 'required|string|max:100',
-                'password' => 'required|min:6'
+                'password' => 'required|min:5'
             ];
 
             // use Illuminate\Support\Facades\Validator;

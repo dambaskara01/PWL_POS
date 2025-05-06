@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yajra\DataTables\Facades\DataTables;
 
+
 class KategoriController extends Controller
 {
         // Menampilkan halaman awal level
